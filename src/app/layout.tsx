@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
-import {
-  ClerkProvider
-} from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
+import AnimatedGlassBackground from "@/components/AnimatedGlassBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,16 +25,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <ClerkProvider>
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <Header />
-          <main className="max-w-7xl mx-auto py-4">
-            {children}
-          </main>
+          <AnimatedGlassBackground>
+            <Header />
+            <main className="max-w-7xl mx-auto py-4">
+              {children}
+            </main>
+          </AnimatedGlassBackground>
         </body>
       </html>
     </ClerkProvider>

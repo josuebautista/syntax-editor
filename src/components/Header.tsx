@@ -28,22 +28,19 @@ export default function Header() {
         <nav>
           <ul className='flex gap-4'>
             <li>
-
-            </li>
-            <li>
               <button onClick={handleNewTheme} className='text-slate-300 hover:text-indigo-300 transition duration-200'>
                 New
               </button>
             </li>
             <li>
-              {/* <a href='#' className='text-slate-300 hover:text-indigo-300 transition duration-200'>
-                My Themes
-              </a> */}
               <SignedOut>
-                <SignInButton />
-                <SignUpButton />
+                <SignInButton className='text-slate-300 hover:text-indigo-300 transition duration-200' />
+                {/* <SignUpButton /> */}
               </SignedOut>
               <SignedIn>
+                <a href='#' className='text-slate-300 hover:text-indigo-300 transition duration-200'>
+                  My Themes
+                </a>
                 <UserButton />
               </SignedIn>
             </li>
