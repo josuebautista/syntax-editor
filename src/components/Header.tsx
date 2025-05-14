@@ -1,16 +1,16 @@
-'use client'
+'use client';
 
-import React from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { generateRandomId } from '@/logic/generateId'
+import React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { generateRandomId } from '@/logic/generateId';
 import {
   SignInButton,
-  SignUpButton,
+  //SignUpButton,
   SignedIn,
   SignedOut,
   UserButton,
-} from '@clerk/nextjs'
+} from '@clerk/nextjs';
 
 export default function Header() {
   const router = useRouter();
@@ -18,17 +18,23 @@ export default function Header() {
   const handleNewTheme = () => {
     const id = generateRandomId();
     router.push(`/edit/${id}`);
-  }
+  };
   return (
     <header className='w-full py-5'>
       <div className='max-w-7xl mx-auto flex justify-between'>
-        <Link href='/' className='text-3xl font-semibold text-slate-300 hover:text-indigo-300 transition duration-200'>
+        <Link
+          href='/'
+          className='text-3xl font-semibold text-slate-300 hover:text-indigo-300 transition duration-200'
+        >
           Syntax Editor
         </Link>
         <nav>
           <ul className='flex gap-4'>
             <li>
-              <button onClick={handleNewTheme} className='text-slate-300 hover:text-indigo-300 transition duration-200'>
+              <button
+                onClick={handleNewTheme}
+                className='text-slate-300 hover:text-indigo-300 transition duration-200'
+              >
                 New
               </button>
             </li>
@@ -38,7 +44,10 @@ export default function Header() {
                 {/* <SignUpButton /> */}
               </SignedOut>
               <SignedIn>
-                <a href='#' className='text-slate-300 hover:text-indigo-300 transition duration-200'>
+                <a
+                  href='#'
+                  className='text-slate-300 hover:text-indigo-300 transition duration-200'
+                >
                   My Themes
                 </a>
                 <UserButton />
@@ -48,5 +57,5 @@ export default function Header() {
         </nav>
       </div>
     </header>
-  )
+  );
 }

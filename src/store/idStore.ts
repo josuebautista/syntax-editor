@@ -1,4 +1,4 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
 
 interface IdState {
   id: string | null;
@@ -6,9 +6,8 @@ interface IdState {
   clearId: () => void;
 }
 
-
 export const useIdStore = create<IdState>((set) => ({
   id: null,
   setId: (newId) => set({ id: newId }),
   clearId: () => set({ id: null }),
-}))
+}));

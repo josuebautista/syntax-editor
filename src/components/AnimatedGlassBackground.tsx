@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useEffect, useRef } from 'react';
 
@@ -13,7 +13,9 @@ interface Ball {
   el: HTMLDivElement;
 }
 
-export default function AnimatedGlassBackground({ children }: GlassBackgroundProps) {
+export default function AnimatedGlassBackground({
+  children,
+}: GlassBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const ballsRef = useRef<Ball[]>([]);
 
@@ -21,7 +23,9 @@ export default function AnimatedGlassBackground({ children }: GlassBackgroundPro
     const container = containerRef.current;
     if (!container) return;
 
-    const ballElements = Array.from(container.querySelectorAll('.dvd-ball')) as HTMLDivElement[];
+    const ballElements = Array.from(
+      container.querySelectorAll('.dvd-ball')
+    ) as HTMLDivElement[];
 
     const balls: Ball[] = ballElements.map((el, index) => {
       const containerWidth = container.offsetWidth;
@@ -36,12 +40,11 @@ export default function AnimatedGlassBackground({ children }: GlassBackgroundPro
 
       return {
         id: `ball-${index}`,
-        dx: (Math.random() * 0.5) + 0.2,
-        dy: (Math.random() * 0.5) + 0.2,
+        dx: Math.random() * 0.5 + 0.2,
+        dy: Math.random() * 0.5 + 0.2,
         el,
       };
     });
-
 
     ballsRef.current = balls;
 
@@ -82,12 +85,12 @@ export default function AnimatedGlassBackground({ children }: GlassBackgroundPro
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen w-full overflow-hidden bg-slate-950"
+      className='relative min-h-screen w-full overflow-hidden bg-slate-950'
     >
-      <div className="absolute h-72 w-72 rounded-full bg-pink-600/30 blur-[80px] dvd-ball"></div> 
-      <div className="absolute h-96 w-96 rounded-full bg-blue-600/30 blur-[80px] dvd-ball"></div>
-      <div className="absolute h-72 w-72 rounded-full bg-green-600/30 blur-[80px] dvd-ball"></div>
-      <div className="absolute h-80 w-80 rounded-full bg-violet-600/30 blur-[80px] dvd-ball"></div>
+      <div className='absolute h-72 w-72 rounded-full bg-pink-600/30 blur-[80px] dvd-ball'></div>
+      <div className='absolute h-96 w-96 rounded-full bg-blue-600/30 blur-[80px] dvd-ball'></div>
+      <div className='absolute h-72 w-72 rounded-full bg-green-600/30 blur-[80px] dvd-ball'></div>
+      <div className='absolute h-80 w-80 rounded-full bg-violet-600/30 blur-[80px] dvd-ball'></div>
       {children}
     </div>
   );

@@ -1,16 +1,13 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { useParams } from 'next/navigation'
-// import Editor from '@/components/Editor'
-import MonacoEditor from '@/components/MonacoEditor'
-import GlassContainer from '@/components/GlassContainer'
-import { useLanguageStore } from '@/store/languageStore'
-import SelectLanguage from '@/components/SelectLanguage'
+import React from 'react';
+import { useParams } from 'next/navigation';
+import GlassContainer from '@/components/GlassContainer';
+import SelectLanguage from '@/components/SelectLanguage';
+import CustomEditor from '@/components/CustomEditor';
 
 export default function CurrentTheme() {
-  const { id = 'no id' } = useParams()
-  const language = useLanguageStore((state) => state.language)
+  const { id = 'no id' } = useParams();
 
   return (
     <>
@@ -25,9 +22,7 @@ export default function CurrentTheme() {
           </div>
         </div>
       </GlassContainer>
-      <MonacoEditor
-        //language={language}
-      />
+      <CustomEditor />
     </>
-  )
+  );
 }
