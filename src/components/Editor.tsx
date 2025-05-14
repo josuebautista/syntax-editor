@@ -1,37 +1,15 @@
-// 'use client';
-
-// import React, { useState } from 'react';
-// import { Editor as MonacoEditor} from '@monaco-editor/react';
-
-
-// export default function Editor() {
-//   const [value, setValue] = useState<string>('console.log(\'Hello world!\')');
-//   const handleOnChange = (newValue: string | undefined) => {
-//     if (!newValue) return;
-//     console.log('newValue', newValue);
-//     setValue(newValue)
-//   };
-
-//   return (
-//     <MonacoEditor
-//       height="500px"
-//       defaultLanguage="javascript"
-//       theme="vs-dark"
-//       value={value}
-//       onChange={(e) => handleOnChange(e)}
-//     />
-//   );
-// }
-
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import Editor, { Monaco } from '@monaco-editor/react';
 import { editor } from 'monaco-editor';
+import { Languages } from '@/constants/languages.enum';
+
+//import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
 
 interface MonacoEditorProps {
   defaultValue?: string;
-  language?: string;
+  language?: Languages;
   theme?: string;
   height?: string;
   width?: string;
@@ -40,47 +18,47 @@ interface MonacoEditorProps {
 }
 
 export default function MonacoEditor({
-  defaultValue = '// Escribe tu código TSX aquí',
-  language = 'typescript',
+  defaultValue = '',
+  language = Languages.typescript,
   theme = 'vs-dark',
   height = '500px',
   width = '100%',
   onChange,
-  options = {
-  },
+  options = {},
 }: MonacoEditorProps) {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [isEditorReady, setIsEditorReady] = useState(false);
 
-  // Configurar Monaco cuando el editor esté listo
-  const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
-    editorRef.current = editor;
+  const handleEditorDidMount = (editorInstance: editor.IStandaloneCodeEditor, monaco: Monaco) => {
+    editorRef.current = editorInstance;
     setIsEditorReady(true);
 
-    // Configurar TypeScript/TSX
-    monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-      jsx: monaco.languages.typescript.JsxEmit.React,
-      jsxFactory: 'React.createElement',
-      reactNamespace: 'React',
-      allowNonTsExtensions: true,
-      allowJs: true,
-      target: monaco.languages.typescript.ScriptTarget.Latest,
-    });
+    if (language === 'typescript' || language === 'javascript') {
+      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+        jsx: monaco.languages.typescript.JsxEmit.React,
+        jsxFactory: 'React.createElement',
+        reactNamespace: 'React',
+        allowNonTsExtensions: true,
+        allowJs: true,
+        target: monaco.languages.typescript.ScriptTarget.Latest,
+      });
 
-    // Cargar tipos de React/JSX
-    const reactTypes = `
-      declare namespace React {
-        function createElement(type: any, props?: any, ...children: any[]): any;
-      }
-    `;
+      // Cargar tipos mínimos de React si es TS o JS
+      const reactTypes = `
+        declare namespace React {
+          function createElement(type: any, props?: any, ...children: any[]): any;
+        }
+      `;
+      monaco.languages.typescript.typescriptDefaults.addExtraLib(reactTypes, 'react.d.ts');
+    }
 
-    monaco.languages.typescript.typescriptDefaults.addExtraLib(
-      reactTypes,
-      'react.d.ts'
-    );
+    // Configuración específica por lenguaje si se desea (extensible)
+    if (language === 'python') {
+      // En un futuro puedes integrar Pyright o WebAssembly para Python
+      console.log('Python ready, add support via WebAssembly or external service.');
+    }
   };
 
-  // Manejar cambios en el contenido del editor
   const handleEditorChange = (value: string | undefined) => {
     if (onChange) {
       onChange(value);
@@ -106,4 +84,4 @@ export default function MonacoEditor({
       }}
     />
   );
-};
+}
